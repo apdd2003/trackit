@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div id="content">{% block content %} {% endblock %}</div>
+  <div id="sidebar" style="display: none;">
+    <h2>TRACKIT V2</h2>
+
+    <p>Django Clone of my Wordpress site</p>
+  </div>
+</body>
+
+</html>
