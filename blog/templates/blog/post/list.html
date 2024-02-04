@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %} {% block title %}TRACKIT V2{% endblock %}
 {% block content %}
-<h1>TRACKIT V2</h1>
+<h1><a href='{% url "blog:post_list" %}'>TRACKIT V2</a></h1>
 {% if tag %}
 <h2>Posts tagged with "{{ tag.name }}"</h2>
 {% endif %}
