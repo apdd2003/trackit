@@ -1,14 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, AddPostForm
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from django.db.models import Count
 from taggit.models import Tag
 import re
+from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 def post_share(request, post_id):
@@ -127,3 +129,36 @@ def post_comment(request, post_id):
                   {'post': post,
                    'form': form,
                    'comment': comment})
+
+
+def add_post(request):
+
+    if request.method == 'POST':
+        # Form was submitted
+        author = get_object_or_404(User, id=1)
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+        # Assign the post to the comment
+            post.author = author
+            post.slug = slugify(post.title)
+
+            tags = form.data['tags'].split(',')
+
+            # print(tags)
+            # # Save the comment to the database
+
+            post.save()
+            for tag in tags:
+
+                post.tags.add(tag.strip())
+
+            # form.save_m2m()
+            return redirect('/')
+
+    else:
+        form = AddPostForm()
+        # ... send email
+    return render(request, 'blog/post/add_post.html',
+                  {'form': form,
+                   })
