@@ -33,6 +33,7 @@ class Post(models.Model):
     objects = models.Manager()  # The default manager.
     published = PublishedManager()
     tags = TaggableManager()
+    thumbnail = models.CharField(max_length=1024, blank=True)
 
     class Meta:
         ordering = ['-publish']

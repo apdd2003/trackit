@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from django.db.models import Count
 from taggit.models import Tag
+import re
 
 
 def post_share(request, post_id):
@@ -58,6 +59,21 @@ def post_list(request, tag_slug=None):
     page_number = request.GET.get('page', 1)
     try:
         posts = paginator.page(page_number)
+        # img_tags = []
+        # for p in posts:
+        #     html = p.body
+
+        #     pattern = re.compile(r'<img\s+[^>]*src="([^"]+)"[^>]*>')
+        #     match = pattern.search(html)
+
+        #     if match:
+        #         image_src = match.group(1)
+        #         print(image_src)
+        #         p.thumbnail = image_src
+        #         # img_tags.append(image_src)
+        #     else:
+        #         p.thumbnail = "https://media.istockphoto.com/id/1147544810/vector/no-thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=2-ScbybM7bUYw-nptQXyKKjwRHKQZ9fEIwoWmZG9Zyg="
+
     except PageNotAnInteger:
      # If page_number is not an integer deliver the first page
         posts = paginator.page(1)

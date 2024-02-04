@@ -6,7 +6,9 @@
 {% endif %}
 {% for post in posts %}
 <h2>
-    <a href="{{ post.get_absolute_url }}"> {{ post.title }} </a>
+    <a href="{{ post.get_absolute_url }}">
+        <img src="{{ post.thumbnail }}" height="100px" />
+        {{ post.title }} </a>
 </h2>
 <p class="tags">Tags: {% for tag in post.tags.all %}
     <a href='{% url "blog:post_list_by_tag" tag.slug %}'>
