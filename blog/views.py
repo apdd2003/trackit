@@ -145,15 +145,11 @@ def add_post(request):
 
             tags = form.data['tags'].split(',')
 
-            # print(tags)
-            # # Save the comment to the database
-
             post.save()
             for tag in tags:
 
                 post.tags.add(tag.strip())
 
-            # form.save_m2m()
             return redirect('/')
 
     else:
