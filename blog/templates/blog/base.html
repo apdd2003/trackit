@@ -61,11 +61,22 @@
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button> -->
-        </form>
+        <!-- </form> -->
       </div>
     </div>
   </nav>
   <br>
+
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }} alert-dismissable" {% endif %}>
+      {{ message }}
+      <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">&times;</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
   {% block content %} {% endblock %}
 
 

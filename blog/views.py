@@ -11,6 +11,7 @@ from taggit.models import Tag
 import re
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.contrib import messages
 
 
 def post_share(request, post_id):
@@ -149,7 +150,8 @@ def add_post(request):
             for tag in tags:
 
                 post.tags.add(tag.strip())
-
+            messages.success(
+                request, 'The post has been added successfully. It will be visible once approved by admin')
             return redirect('/')
 
     else:
