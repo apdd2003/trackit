@@ -1,11 +1,18 @@
 {% extends "blog/base.html" %}
-{% block title %}Share a post{% endblock %}
+{% block title %}Add a post{% endblock %}
 {% block content %}
 <div class="container">
     <h1>Add Your Post</h1>
     <form method="post">
-        {{ form.as_p }}
+        {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            <br />
+            {{ field }}
+        </div>
+        {% endfor %}
         {% csrf_token %}
+        <br />
         <input type="submit" value="Submit">
     </form>
 </div>
