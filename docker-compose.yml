@@ -38,5 +38,5 @@ services:
   - ./config/nginx:/etc/nginx/templates
   - .:/code
   ports:
-  - "80:80"
+  - "81:81"
   - "443:443"
