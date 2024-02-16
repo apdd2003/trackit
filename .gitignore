@@ -127,7 +127,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+/data/cache/*
+/data/db/*
 # Spyder project settings
 .spyderproject
 .spyproject
