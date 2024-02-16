@@ -3,7 +3,7 @@ upstream uwsgi_app {
  server unix:/code/uwsgi_app.sock;
 }
 server {
- listen 80;
+ listen 81;
  server_name 100.25.213.29 www.educaproject.com educaproject.com;
  return 301 https://$host$request_uri;
 }
