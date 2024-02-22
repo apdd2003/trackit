@@ -10,3 +10,4 @@ tzdata==2023.4
 redis==4.3.4
 psycopg2==2.9.3
 uwsgi
+celery==5.3.6

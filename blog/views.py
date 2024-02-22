@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import EmailPostForm, CommentForm, AddPostForm
 from django.views.generic import ListView
 from django.core.mail import send_mail
+from .tasks import send_notification_mail
 from django.views.decorators.http import require_POST
 from django.db.models import Count
 from taggit.models import Tag
@@ -152,6 +153,7 @@ def add_post(request):
                 post.tags.add(tag.strip())
             messages.success(
                 request, 'The post has been added successfully. It will be visible once approved by admin')
+            send_notification_mail.delay(post.title)
             return redirect('/')
 
     else:
