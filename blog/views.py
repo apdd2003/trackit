@@ -13,6 +13,7 @@ import re
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.contrib import messages
+import pandas as pd
 
 
 def post_share(request, post_id):
@@ -162,3 +163,13 @@ def add_post(request):
     return render(request, 'blog/post/add_post.html',
                   {'form': form,
                    })
+
+
+def load_posts_from_csv(request):
+    df = pd.read_csv('blog_post.csv')
+    Post.objects.bulk_create([Post(**row) for row in df.to_dict('records')])
+
+    messages.success(
+        request, 'The post has been loaded from file')
+    print(df.head())
+    return redirect('/')
