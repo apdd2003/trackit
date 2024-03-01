@@ -15,7 +15,7 @@ services:
     restart: always
     volumes:
     - ./data/cache:/data
-    porst:
+    ports:
     - "6379:6379"
  web:
   build: .
@@ -29,9 +29,11 @@ services:
   - POSTGRES_DB=postgres
   - POSTGRES_USER=postgres
   - POSTGRES_PASSWORD=postgres
+  - REDIS_HOST=cache
 
   depends_on:
   - db
+  - cache
  nginx:
   image: nginx:1.23.1
   restart: always
