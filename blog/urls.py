@@ -16,4 +16,6 @@ urlpatterns = [
          views.post_comment, name='post_comment'),
     path('add/',
          views.add_post, name='add_post'),
+    path('load_posts_from_csv/',
+         views.load_posts_from_csv, name='load_posts_from_csv'),
 ]
