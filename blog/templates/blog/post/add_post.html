@@ -7,11 +7,12 @@
         {% for field in form %}
         <div class="fieldWrapper">
             {{ field.errors }}
-            <br />
+            <br /><br />
             {{ field }}
         </div>
         {% endfor %}
         {% csrf_token %}
+        <br />
         <br />
         <input type="submit" value="Submit">
     </form>
