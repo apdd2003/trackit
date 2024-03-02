@@ -26,9 +26,10 @@
 <body>
 
   <div id="header">
-    <span class="logo"><a style="text-decoration: none;" href="{% url 'blog:post_list' %}">TRACKIT2 V2.0</a></span>
-    {% if request.user.is_authenticated %}
+    <span class="logo"><a style="text-decoration: none;" href="{% url 'blog:post_list' %}">TRACKIT V2.0</a></span>
+
     <ul class='menu'>
+      {% if request.user.is_authenticated %}
       <li {% if section == 'dashboard' %}class="selected" {% endif %}>
         <a href="{% url 'dashboard' %}">Dashboard</a>
       </li>

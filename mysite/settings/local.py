@@ -1,7 +1,7 @@
 from .base import *
 ALLOWED_HOSTS = ['*']
 ADMINS = [
-    ('Antonio M', 'sayeem.shaikh@gmail.com'),
+    ('Sayeem', 'sayeem.shaikh@gmail.com'),
 ]
 DEBUG = True
 DATABASES = {
@@ -14,3 +14,5 @@ REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1:81')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 REDIS_URL = 'redis://cache:6379'
 CACHES['default']['LOCATION'] = REDIS_URL
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
