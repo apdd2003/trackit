@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% block title %}Delete Post?{% endblock %}
 {% block content %}
-<h1>Are you sure you want to delete {% post.title %} post?</h1>
+<h1>Are you sure you want to delete "{{ post.title }}" ?</h1>
 
 <div>
     <div class="btn-group">
@@ -15,4 +15,5 @@
 
     </div>
 
-    {% endblock %}
+</div>
+{% endblock %}

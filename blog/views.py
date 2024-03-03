@@ -152,14 +152,25 @@ def add_post(request):
                    })
 
 
+def post_delete_confirm(request, post_id):
+    # Retrieve post by id
+    post = get_object_or_404(Post, id=post_id)
+
+    return render(request, 'blog/post/delete_confirm.html',
+                  {'post': post,
+                   })
+
+
 def post_delete(request, post_id):
     # Retrieve post by id
     post = get_object_or_404(Post, id=post_id)
     if post:
         post.delete()
-    else:
         messages.success(
             request, 'The post has been deleted successfully.')
+    else:
+        messages.warning(
+            request, 'The post not found.')
     return redirect('/account')
 
 

@@ -20,4 +20,6 @@ urlpatterns = [
          views.load_posts_from_csv, name='load_posts_from_csv'),
     path('<int:post_id>/delete/',
          views.post_delete, name='post_delete'),
+    path('<int:post_id>/post_delete_confirm/',
+         views.post_delete_confirm, name='post_delete_confirm'),
 ]

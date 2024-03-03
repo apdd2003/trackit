@@ -33,7 +33,8 @@ class AddPostForm(forms.ModelForm):
         # Call to ModelForm constructor
         super(AddPostForm, self).__init__(*args, **kwargs)
         self.fields['thumbnail'].widget.attrs['style'] = 'width:700px;'
-        self.fields['body'].widget.attrs['style'] = 'width:700px;'
         self.fields['thumbnail'].widget.attrs['placeholder'] = 'image url'
-        self.fields['title'].widget.attrs['style'] = 'width:400px;'
+        self.fields['title'].widget.attrs['style'] = 'width:700px;'
         self.fields['title'].widget.attrs['placeholder'] = 'interesting blog title'
+        self.fields['tags'].widget.attrs['placeholder'] = 'comma separated list of tags'
+        self.fields['tags'].widget.attrs['style'] = 'width:350px;'
