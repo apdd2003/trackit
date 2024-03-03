@@ -1,6 +1,56 @@
 {% extends "blog/base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<h1>Dashboard</h1>
-<p>Welcome to your dashboard.</p>
+<h1>Dashboard </h1>
+<p class="mb-lg-5"> Welcome to your dashboard. Your approved posts appear here.</p>
+
+{% for post in posts %}
+<div class="border-black">
+
+    <div class="mb-2">
+        <div>
+            <a href="{{ post.get_absolute_url }}"><img height="100px" src="{{ post.thumbnail }}" alt=""></a>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">Tags: {% for tag in post.tags.all %}
+                <a href='{% url "blog:post_list_by_tag" tag.slug %}'>
+                    {{ tag.name }}</a>
+                {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p class="card-text">{{ post.title|truncatechars:30 }}</p>
+
+
+            <div class="d-flex  justify-content-between align-items-center">
+
+                <div>
+                    <div class="btn-group">
+                        <a href="{{ post.get_absolute_url }}"><button class="btn btn-sm btn-outline-light"
+                                style="background-color: green;">Read More</button></a>
+
+                    </div>
+                    <small class="px-2 text-body-secondary">{{ post.publish }} by {{ post.author }}</small>
+
+                </div>
+                <div>
+                    <div class="btn-group">
+                        <a href="#"><button class="btn btn-sm btn-outline-light"
+                                style="background-color: rgb(93, 93, 228);">Edit</button></a>
+
+                    </div>
+                    <div class="btn-group">
+                        <a href="#"><button class="btn btn-sm btn-outline-light"
+                                style="background-color: orangered;">Delete</button></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="bg-danger border-2 border-top border-dark-subtle" />
+{% endfor %}
+{% include "pagination.html" with page=posts %}
 {% endblock %}

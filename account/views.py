@@ -1,8 +1,10 @@
 from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
+from blog.models import Post
 
 
 def user_login(request):
@@ -28,6 +30,38 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
+    posts = Post.objects.filter(author=request.user)
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+
+    except PageNotAnInteger:
+        # If page_number is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page_number is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
     return render(request,
                   'account/dashboard.html',
-                  {'section': 'dashboard'})
+                  {'section': 'dashboard', 'posts': posts})
+
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            # Set the chosen password
+            new_user.set_password(
+                user_form.cleaned_data['password'])
+            # Save the User object
+            new_user.save()
+            return render(request,
+                          'account/register_done.html',
+                          {'new_user': new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request,
+                  'account/register.html',
+                  {'user_form': user_form})

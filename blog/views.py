@@ -11,6 +11,7 @@ from django.db.models import Count
 from taggit.models import Tag
 import re
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.contrib import messages
 import pandas as pd
@@ -64,20 +65,6 @@ def post_list(request, tag_slug=None):
     page_number = request.GET.get('page', 1)
     try:
         posts = paginator.page(page_number)
-        # img_tags = []
-        # for p in posts:
-        #     html = p.body
-
-        #     pattern = re.compile(r'<img\s+[^>]*src="([^"]+)"[^>]*>')
-        #     match = pattern.search(html)
-
-        #     if match:
-        #         image_src = match.group(1)
-        #         print(image_src)
-        #         p.thumbnail = image_src
-        #         # img_tags.append(image_src)
-        #     else:
-        #         p.thumbnail = "https://media.istockphoto.com/id/1147544810/vector/no-thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=2-ScbybM7bUYw-nptQXyKKjwRHKQZ9fEIwoWmZG9Zyg="
 
     except PageNotAnInteger:
      # If page_number is not an integer deliver the first page
@@ -134,11 +121,12 @@ def post_comment(request, post_id):
                    'comment': comment})
 
 
+@login_required
 def add_post(request):
 
     if request.method == 'POST':
         # Form was submitted
-        author = get_object_or_404(User, id=1)
+        author = request.user
         form = AddPostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
@@ -159,9 +147,8 @@ def add_post(request):
 
     else:
         form = AddPostForm()
-        # ... send email
     return render(request, 'blog/post/add_post.html',
-                  {'form': form,
+                  {'form': form, 'section': 'add_post'
                    })
 
 
