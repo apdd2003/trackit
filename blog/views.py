@@ -152,6 +152,17 @@ def add_post(request):
                    })
 
 
+def post_delete(request, post_id):
+    # Retrieve post by id
+    post = get_object_or_404(Post, id=post_id)
+    if post:
+        post.delete()
+    else:
+        messages.success(
+            request, 'The post has been deleted successfully.')
+    return redirect('/account')
+
+
 def load_posts_from_csv(request):
     df = pd.read_csv('blog_post.csv')
     Post.objects.bulk_create([Post(**row) for row in df.to_dict('records')])

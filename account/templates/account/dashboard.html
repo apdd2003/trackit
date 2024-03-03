@@ -41,7 +41,7 @@
 
                     </div>
                     <div class="btn-group">
-                        <a href="#"><button class="btn btn-sm btn-outline-light"
+                        <a href='{% url "blog:post_delete" post.id %}'><button class="btn btn-sm btn-outline-light"
                                 style="background-color: orangered;">Delete</button></a>
 
                     </div>
@@ -51,6 +51,10 @@
     </div>
 </div>
 <hr class="bg-danger border-2 border-top border-dark-subtle" />
+{% empty %}
+<p class="mb-lg-5">There are no posts yet. Start posting! </p>
 {% endfor %}
+{% if posts %}
 {% include "pagination.html" with page=posts %}
+{% endif %}
 {% endblock %}
